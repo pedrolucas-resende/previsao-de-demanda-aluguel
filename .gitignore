@@ -1,6 +1,24 @@
+# Ambiente virtual
 .venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Python
 __pycache__/
 *.pyc
+*.pyo
+
+# Credenciais — NUNCA sobe pro git
+*.json
 .env
+
+# Dados brutos — podem ser pesados e sensíveis
 data/raw/
 data/processed/
+
+# Outputs gerados
+outputs/
+
+# MacOS
+.DS_Store

@@ -8,16 +8,37 @@ print(f"✅ Conectado ao projeto: {PROJETO}")
 
 query_demanda = """
 SELECT
-    DATE_TRUNC(dia, MONTH)  AS ano_mes,
+    DATE_TRUNC(dia, MONTH)          AS ano_mes,
     regiao,
-    SUM(motos_alugadas)     AS motos_alugadas_mes
+    ROUND(AVG(motos_alugadas), 0)   AS media_motos_alugadas_dia
 FROM `dm-mottu-aluguel.exp_frota.frota_alugada_historico`
 WHERE
-    dia >= DATE_SUB(CURRENT_DATE(), INTERVAL 24 MONTH)
-    AND pais = 'Brasil'
+    pais = 'Brasil'
+    AND DATE_TRUNC(dia, MONTH) < DATE_TRUNC(CURRENT_DATE(), MONTH)
+    AND dia >= DATE_SUB(CURRENT_DATE(), INTERVAL 24 MONTH)
 GROUP BY ano_mes, regiao
 ORDER BY ano_mes DESC, regiao
 """
+
+
+'''
+query_debug = """
+SELECT
+    dia,
+    regiao,
+    SUM(motos_alugadas) AS motos_alugadas_dia
+FROM `dm-mottu-aluguel.exp_frota.frota_alugada_historico`
+WHERE pais = 'Brasil'
+  AND dia BETWEEN '2025-01-01' AND '2025-01-31'
+  AND regiao = 'Aracaju'
+GROUP BY dia, regiao
+ORDER BY dia
+"""
+
+df_debug = cliente.query(query_debug).to_dataframe()
+print(df_debug)
+'''
+
 
 # 1. Roda a query e cria o dataframe
 df = cliente.query(query_demanda).to_dataframe()

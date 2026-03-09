@@ -1,101 +1,82 @@
-# 🏍️ Métricas de Mercado — Mottu
+# mottu-previsao-demanda
 
-Análise da frota de motocicletas no Brasil por município, usando dados públicos do SENATRAN/RENAVAM.
+## ⚙️ Como rodar o projeto
 
----
+### Pré-requisitos
+- Python 3.13+
+- Conta Google Cloud com acesso ao projeto `dm-mottu-aluguel`
+- [`gcloud CLI`](https://cloud.google.com/sdk/docs/install) instalado
 
-## 📁 Estrutura do Projeto
-
-```
-metricas-de-mercado/
-│
-├── download_senatran.py          # Script de download e processamento dos dados
-├── analise_motos.ipynb           # Notebook com gráfico e previsão
-├── README.md
-│
-└── senatran_csvs/
-    └── janeiro/
-        ├── frota_2020_01.csv
-        ├── frota_2021_01.csv
-        ├── frota_2022_01.csv
-        ├── frota_2023_01.csv
-        ├── frota_2024_01.csv
-        └── frota_2025_01.csv
-    └── frota_janeiro_2020_2025.csv   # CSV unificado
+### 1. Clone o repositório
+```bash
+git clone https://github.com/pedrolucas-campos/mottu-previsao-demanda.git
+cd mottu-previsao-demanda
 ```
 
----
-
-## 🚀 Como usar
-
-### 1. Instale as dependências
-
+### 2. Crie e ative o ambiente virtual
 ```bash
 python -m venv .venv
-source .venv/bin/activate        # Mac/Linux
-# .venv\Scripts\activate         # Windows
-
-pip install requests pandas openpyxl xlrd scikit-learn matplotlib ipykernel
-python -m ipykernel install --user --name=venv
+source .venv/bin/activate  # Linux/Mac
+.venv\Scripts\activate     # Windows
 ```
 
-### 2. Baixe os dados do SENATRAN
-
+### 3. Instale as dependências
 ```bash
-python download_senatran.py
+pip install -r requirements.txt
 ```
 
-Isso vai baixar os arquivos de Janeiro de 2020 a 2025 e gerar o CSV unificado em `senatran_csvs/frota_janeiro_2020_2025.csv`.
-
-### 3. Abra o notebook
-
+### 4. Autentique no Google Cloud
 ```bash
-jupyter notebook
+gcloud auth application-default login
 ```
 
-Selecione o kernel **venv** e rode todas as células do `analise_motos.ipynb`.
+### 5. Gere seus .csv e abra os notebooks
 
----
-
-## 📊 Dados
-
-| Coluna | Descrição |
-|---|---|
-| `MUNICIPIO` | Nome do município |
-| `TOTAL` | Total de veículos registrados |
-| `MOTOCICLETA` | Total de motocicletas registradas |
-| `ANO` | Ano de referência |
-| `MES` | Mês de referência (sempre 1 = Janeiro) |
-
-**Fonte:** [SENATRAN / Ministério dos Transportes](https://www.gov.br/transportes/pt-br/assuntos/transito/senatran)  
-**Periodicidade:** Mensal (este projeto usa apenas Janeiro de cada ano)  
-**Cobertura:** 2020 a 2025
-
----
-
-## 📈 Análises disponíveis
-
-![Frota de Motocicletas no Brasil](senatran_csvs/frota_motos_previsao.png)
-
-
-
-- Evolução da frota de motocicletas por ano (Brasil)
-- Previsão para 2026 e 2027 via regressão linear
-- Base pronta para calcular **% de penetração da Mottu** por município
-
----
-
-## 🧮 Métrica principal
-
+Para o notebook `02_exploracao.ipynb`:
+```bash
+python3 tabela-demanda.py
+# abra o notebook com o kernel python .venv
 ```
-Penetração Mottu (%) = Clientes Mottu na cidade ÷ Frota de motos na cidade × 100
+
+Para o notebook `03_exploracao_contratos.ipynb`:
+```bash
+python3 contratos_lugar_produtos.py
+# abra o notebook com o kernel python .venv
 ```
 
 ---
 
-## 🔗 Fontes
+## 📊 Visualizações
 
-- [SENATRAN — Frota de Veículos](https://www.gov.br/transportes/pt-br/assuntos/transito/senatran)
-- [ABRACICLO — Emplacamentos mensais](https://www.abraciclo.org.br)
-- [IBGE — Censo 2022](https://www.ibge.gov.br/censo2022)
-- [CAGED — Motoboys formais](https://www.gov.br/trabalho-e-emprego)
+### Demanda Total
+![Demanda Total](data/raw/grafico_demanda_total.png)
+
+### Contratos: Aluguel vs Venda
+![Contratos Aluguel vs Venda](data/raw/grafico_contratos_aluguel_venda.png)
+
+### Evolução dos Top 8
+![Evolução Top 8](data/raw/grafico_evolucao_top8.png)
+
+### Heatmap de Sazonalidade
+![Heatmap Sazonalidade](data/raw/grafico_heatmap_sazonalidade.png)
+
+### Mix por Tipo de Moto
+![Mix Tipo de Moto](data/raw/grafico_mix_tipo_moto.png)
+
+### MoM — Contratos
+![MoM Contratos](data/raw/grafico_mom_contratos.png)
+
+### MoM — Demanda
+![MoM Demanda](data/raw/grafico_mom.png)
+
+### Taxa de Renovação
+![Taxa de Renovação](data/raw/grafico_taxa_renovacao.png)
+
+### Distribuição por Tipo de Moto
+![Tipo de Moto](data/raw/grafico_tipo_moto.png)
+
+### Top Lugares
+![Top Lugares](data/raw/grafico_top_lugares.png)
+
+### Top Regiões
+![Top Regiões](data/raw/grafico_top_regioes.png)

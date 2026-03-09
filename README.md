@@ -1,43 +1,101 @@
-## ⚙️ Como rodar o projeto
+# 🏍️ Métricas de Mercado — Mottu
 
-### Pré-requisitos
-- Python 3.13+
-- Conta Google Cloud com acesso ao projeto `dm-mottu-aluguel`
-- [`gcloud CLI`](https://cloud.google.com/sdk/docs/install) instalado
-### 1. Clone o repositório
-```bash
-git clone https://github.com/pedrolucas-campos/mottu-previsao-demanda.git
-cd mottu-previsao-demanda
+Análise da frota de motocicletas no Brasil por município, usando dados públicos do SENATRAN/RENAVAM.
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+metricas-de-mercado/
+│
+├── download_senatran.py          # Script de download e processamento dos dados
+├── analise_motos.ipynb           # Notebook com gráfico e previsão
+├── README.md
+│
+└── senatran_csvs/
+    └── janeiro/
+        ├── frota_2020_01.csv
+        ├── frota_2021_01.csv
+        ├── frota_2022_01.csv
+        ├── frota_2023_01.csv
+        ├── frota_2024_01.csv
+        └── frota_2025_01.csv
+    └── frota_janeiro_2020_2025.csv   # CSV unificado
 ```
 
-### 2. Crie e ative o ambiente virtual
+---
+
+## 🚀 Como usar
+
+### 1. Instale as dependências
+
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # Linux/Mac
-.venv\Scripts\activate     # Windows
+source .venv/bin/activate        # Mac/Linux
+# .venv\Scripts\activate         # Windows
+
+pip install requests pandas openpyxl xlrd scikit-learn matplotlib ipykernel
+python -m ipykernel install --user --name=venv
 ```
 
-### 3. Instale as dependências
+### 2. Baixe os dados do SENATRAN
+
 ```bash
-pip install -r requirements.txt
+python download_senatran.py
 ```
 
-### 4. Autentique no Google Cloud
+Isso vai baixar os arquivos de Janeiro de 2020 a 2025 e gerar o CSV unificado em `senatran_csvs/frota_janeiro_2020_2025.csv`.
+
+### 3. Abra o notebook
+
 ```bash
-gcloud auth application-default login
+jupyter notebook
 ```
 
-### 5. Gere seus .csv e abra os notebooks
+Selecione o kernel **venv** e rode todas as células do `analise_motos.ipynb`.
+
+---
+
+## 📊 Dados
+
+| Coluna | Descrição |
+|---|---|
+| `MUNICIPIO` | Nome do município |
+| `TOTAL` | Total de veículos registrados |
+| `MOTOCICLETA` | Total de motocicletas registradas |
+| `ANO` | Ano de referência |
+| `MES` | Mês de referência (sempre 1 = Janeiro) |
+
+**Fonte:** [SENATRAN / Ministério dos Transportes](https://www.gov.br/transportes/pt-br/assuntos/transito/senatran)  
+**Periodicidade:** Mensal (este projeto usa apenas Janeiro de cada ano)  
+**Cobertura:** 2020 a 2025
+
+---
+
+## 📈 Análises disponíveis
+
+![Frota de Motocicletas no Brasil](senatran_csvs/frota_motos_previsao.png)
 
 
-Para o notebook ```02_exploracao.ipynb```:
-```bash
-python3 tabela-demanda.py
-# abra o notebook com o kernel python .venv
+
+- Evolução da frota de motocicletas por ano (Brasil)
+- Previsão para 2026 e 2027 via regressão linear
+- Base pronta para calcular **% de penetração da Mottu** por município
+
+---
+
+## 🧮 Métrica principal
+
+```
+Penetração Mottu (%) = Clientes Mottu na cidade ÷ Frota de motos na cidade × 100
 ```
 
-Para o notebook ```03_exploracao_contratos.ipynb```:
-```bash
-python3 contratos_lugar_produtos.py
-# abra o notebook com o kernel python .venv
-```
+---
+
+## 🔗 Fontes
+
+- [SENATRAN — Frota de Veículos](https://www.gov.br/transportes/pt-br/assuntos/transito/senatran)
+- [ABRACICLO — Emplacamentos mensais](https://www.abraciclo.org.br)
+- [IBGE — Censo 2022](https://www.ibge.gov.br/censo2022)
+- [CAGED — Motoboys formais](https://www.gov.br/trabalho-e-emprego)

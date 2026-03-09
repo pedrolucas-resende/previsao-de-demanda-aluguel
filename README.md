@@ -26,3 +26,18 @@ pip install -r requirements.txt
 ```bash
 gcloud auth application-default login
 ```
+
+### 5. Gere seus .csv e abra os notebooks
+
+
+Para o notebook ```02_exploracao.ipynb```:
+```bash
+python3 tabela-demanda.py
+# abra o notebook com o kernel python .venv
+```
+
+Para o notebook ```03_exploracao_contratos.ipynb```:
+```bash
+python3 contratos_lugar_produtos.py
+# abra o notebook com o kernel python .venv
+```

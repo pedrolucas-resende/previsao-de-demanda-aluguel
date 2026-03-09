@@ -8,6 +8,7 @@
 __pycache__/
 *.pyc
 *.pyo
+sandbox.py
 
 # Credenciais — NUNCA sobe pro git
 *.json

@@ -15,7 +15,8 @@ sandbox.py
 .env
 
 # Dados brutos — podem ser pesados e sensíveis
-data/raw/
+#data/raw/
+*.csv
 data/processed/
 
 # Outputs gerados

@@ -48,17 +48,8 @@ python3 contratos_lugar_produtos.py
 
 ## 📊 Visualizações
 
-### Demanda Total
-![Demanda Total](data/raw/grafico_demanda_total.png)
-
 ### Contratos: Aluguel vs Venda
 ![Contratos Aluguel vs Venda](data/raw/grafico_contratos_aluguel_venda.png)
-
-### Evolução dos Top 8
-![Evolução Top 8](data/raw/grafico_evolucao_top8.png)
-
-### Heatmap de Sazonalidade
-![Heatmap Sazonalidade](data/raw/grafico_heatmap_sazonalidade.png)
 
 ### Mix por Tipo de Moto
 ![Mix Tipo de Moto](data/raw/grafico_mix_tipo_moto.png)
@@ -66,17 +57,8 @@ python3 contratos_lugar_produtos.py
 ### MoM — Contratos
 ![MoM Contratos](data/raw/grafico_mom_contratos.png)
 
-### MoM — Demanda
-![MoM Demanda](data/raw/grafico_mom.png)
-
-### Taxa de Renovação
-![Taxa de Renovação](data/raw/grafico_taxa_renovacao.png)
-
 ### Distribuição por Tipo de Moto
 ![Tipo de Moto](data/raw/grafico_tipo_moto.png)
 
 ### Top Lugares
 ![Top Lugares](data/raw/grafico_top_lugares.png)
-
-### Top Regiões
-![Top Regiões](data/raw/grafico_top_regioes.png)
